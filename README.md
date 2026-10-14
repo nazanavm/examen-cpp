@@ -2,6 +2,7 @@
 |Linea  |       Justificación      | Corrección|
 | 8     | Falta el ";"             | Se le añade un ";"|
 | 28    | Tenía doble comilla ("") | Se usa comillas simples ('')|
+```cpp
 #include <iostream>
 #include <string>
 using namespace std;
@@ -11,36 +12,33 @@ struct Jugador {
 	int puntos;
 };
 
-void sumarPuntos(Jugador j, int extra) {
-     j.puntos += extra;
-	
-	cout << j.nombre << ":" << extra << "puntos" << endl;
+void sumarPuntos(Jugador& j, int extra) { // pasar por referencia para modificar al original
+    j.puntos += extra;
 }
 
 void mostrar(const Jugador& j) {
-	cout << j.nombre << ": " << j.puntos << " puntos" << endl;
+    cout << j.nombre << ": " << j.puntos << " puntos" << endl;
 }
 
 int main() {
-	Jugador a;
-	a.nombre = "Ana";
-	a.puntos = 90;
-	char inicial = 'A';
+    Jugador a;
+    a.nombre = "Ana";
+    a.puntos = 90;
+    char inicial = 'A';
 
-	// Respaldo de Ana antes de modificarla
-	Jugador & respaldo = a;
+    // Respaldo de Ana antes de modificarla (COPIA)
+    Jugador respaldo = a; // copia independiente
 
-	sumarPuntos(a, 10);
+    sumarPuntos(a, 10);
 
-	if (a.puntos > 100) {
-		cout << "Puntaje maximo" << endl;
-	}
+    if (a.puntos >= 100) { // >= para incluir 100
+        cout << "Puntaje maximo" << endl;
+    }
 
-  
+    mostrar(a);
+    mostrar(respaldo);
 
-	mostrar(a);
-	mostrar(respaldo);
-
-	cout << "Inicial: " << inicial << endl;
-	return 0;
+    cout << "Inicial: " << inicial << endl;
+    return 0;
 }
+```
